@@ -1,5 +1,5 @@
 {
-  "name": "api-desafio",
+  "name": "api-desafio-k8s",
   "version": "1.0.0",
   "description": "",
   "main": "src/main.ts",
