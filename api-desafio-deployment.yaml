@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+    name: api-desafio-deployment
+spec:
+    replicas: 3
+    selector:
+        matchLabels:
+            app: api-desafio
+    template:
+        metadata:
+            labels:
+                app: api-desafio
+        spec:
+            containers:
+                - name: api-desafio-container
+                  image: gabrielpontes/api-desafio:v1.0.2
+                  ports:
+                      - containerPort: 4000
+                  env:
+                      - name: PORT
+                        valueFrom:
+                            configMapKeyRef:
+                                name: api-desafio-configmap
+                                key: PORT
+                  livenessProbe:
+                      httpGet:
+                          path: /health
+                          port: 4000
+                      initialDelaySeconds: 15
+                      periodSeconds: 10
+                  readinessProbe:
+                      httpGet:
+                          path: /ready
+                          port: 4000
+                      initialDelaySeconds: 5
+                      periodSeconds: 5
+                  startupProbe:
+                      httpGet:
+                          path: /startup
+                          port: 4000
+                      initialDelaySeconds: 30

@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+    name: api-desafio-pod
+    labels:
+        app: api-desafio
+spec:
+    containers:
+        - name: api-desafio
+          image: gabrielpontes/api-desafio:v1.0.1
+          env:
+              - name: PORT
+                valueFrom:
+                    configMapKeyRef:
+                        name: api-desafio-configmap
+                        key: PORT
+          ports:
+              - containerPort: 4000
